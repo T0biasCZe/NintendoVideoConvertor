@@ -48,6 +48,7 @@ namespace WindowsFormsApp1 {
         string subtitles;
         public Form1() {
             InitializeComponent();
+            Application.EnableVisualStyles();
             version.Text = verze;
             if(File.Exists(@"C:\Windows\Media\Windows Logon Sound.wav")) {
                 logonsound.SoundLocation = @"C:\Windows\Media\Windows Logon Sound.wav";
