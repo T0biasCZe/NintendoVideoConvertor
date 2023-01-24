@@ -91,6 +91,7 @@
             this.embeddedsubs = new System.Windows.Forms.CheckBox();
             this.cusresx = new System.Windows.Forms.TextBox();
             this.cusresy = new System.Windows.Forms.TextBox();
+            this.subtitle_notfound_error = new System.Windows.Forms.CheckBox();
             this.panel_ds_vf.SuspendLayout();
             this.panel_ds_or_wii.SuspendLayout();
             this.panel_ds_leftright.SuspendLayout();
@@ -589,7 +590,7 @@
             // 
             this.debug_textbox.BackColor = System.Drawing.SystemColors.Menu;
             this.debug_textbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.debug_textbox.Location = new System.Drawing.Point(0, 688);
+            this.debug_textbox.Location = new System.Drawing.Point(0, 736);
             this.debug_textbox.Name = "debug_textbox";
             this.debug_textbox.Size = new System.Drawing.Size(640, 256);
             this.debug_textbox.TabIndex = 33;
@@ -632,7 +633,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label7.Location = new System.Drawing.Point(0, 672);
+            this.label7.Location = new System.Drawing.Point(0, 720);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(83, 13);
             this.label7.TabIndex = 22;
@@ -640,7 +641,7 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(0, 608);
+            this.textBox2.Location = new System.Drawing.Point(0, 656);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(192, 20);
             this.textBox2.TabIndex = 36;
@@ -754,7 +755,7 @@
             // 
             // suboffset
             // 
-            this.suboffset.Location = new System.Drawing.Point(208, 608);
+            this.suboffset.Location = new System.Drawing.Point(208, 656);
             this.suboffset.Name = "suboffset";
             this.suboffset.Size = new System.Drawing.Size(192, 20);
             this.suboffset.TabIndex = 46;
@@ -771,23 +772,34 @@
             // 
             // cusresx
             // 
-            this.cusresx.Location = new System.Drawing.Point(0, 640);
+            this.cusresx.Location = new System.Drawing.Point(0, 688);
             this.cusresx.Name = "cusresx";
             this.cusresx.Size = new System.Drawing.Size(192, 20);
             this.cusresx.TabIndex = 48;
             // 
             // cusresy
             // 
-            this.cusresy.Location = new System.Drawing.Point(208, 640);
+            this.cusresy.Location = new System.Drawing.Point(208, 688);
             this.cusresy.Name = "cusresy";
             this.cusresy.Size = new System.Drawing.Size(192, 20);
             this.cusresy.TabIndex = 49;
+            // 
+            // subtitle_notfound_error
+            // 
+            this.subtitle_notfound_error.AutoSize = true;
+            this.subtitle_notfound_error.Location = new System.Drawing.Point(272, 608);
+            this.subtitle_notfound_error.Name = "subtitle_notfound_error";
+            this.subtitle_notfound_error.Size = new System.Drawing.Size(123, 30);
+            this.subtitle_notfound_error.TabIndex = 50;
+            this.subtitle_notfound_error.Text = "show warning when \r\nsrt not found";
+            this.subtitle_notfound_error.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1263, 903);
+            this.Controls.Add(this.subtitle_notfound_error);
             this.Controls.Add(this.cusresy);
             this.Controls.Add(this.cusresx);
             this.Controls.Add(this.embeddedsubs);
@@ -923,6 +935,7 @@
         public System.Windows.Forms.CheckBox embeddedsubs;
         private System.Windows.Forms.TextBox cusresx;
         private System.Windows.Forms.TextBox cusresy;
+        private System.Windows.Forms.CheckBox subtitle_notfound_error;
     }
 }
 
