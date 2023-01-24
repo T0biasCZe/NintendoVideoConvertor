@@ -48,8 +48,18 @@ namespace WindowsFormsApp1 {
         string cesta;
         string outputnazev;
         string subtitles;
+        
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern bool SetProcessDPIAware();
         public Form1() {
             InitializeComponent();
+            /*using(Graphics graphics = this.CreateGraphics()) {
+                float dpiX = graphics.DpiX;
+                float dpiY = graphics.DpiY;
+                this.AutoScaleDimensions = new SizeF(dpiX / 96, dpiY / 96);
+            };
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;*/ 
+            //SetProcessDPIAware();
             version.Text = verze;
             if(File.Exists(@"C:\Windows\Media\Windows Logon Sound.wav")) {
                 logonsound.SoundLocation = @"C:\Windows\Media\Windows Logon Sound.wav";
@@ -500,6 +510,7 @@ namespace WindowsFormsApp1 {
                             else {
                                 argumenty = " -vf \"scale=" + res_double + ":flags=lanczos,scale=" + res_normal + ":flags=neighbor,setsar=1\" -bsf:v \"h264_metadata=sample_aspect_ratio=1\" "; //-aspect 40:24
                             }
+                            argumenty = subtitleinput + argumenty;
                             output = " -c:v " + codec + " -b:a 128k" + surrounddownmix + " -c:a aac  -b:v " + bitrate + "k " + bframes + audiomix;
                         }
                         else if(ds_outputtype == 1) {
@@ -512,6 +523,8 @@ namespace WindowsFormsApp1 {
                             else {
                                 argumenty = " -vf \"scale=" + res_hd_double + ":flags=lanczos,scale=" + res_hd + ":flags=neighbor,setsar=1/2\" -bsf:v \"h264_metadata=sample_aspect_ratio=1/2\" ";
                             }
+                            argumenty = subtitleinput + argumenty;
+
                             output = " -c:v " + codec + " -b:a 128k " + surrounddownmix + "-c:a aac -b:v " + bitrate + "k " + bframes + audiomix;
                         }
                         else if(ds_outputtype == 2) {
@@ -526,7 +539,7 @@ namespace WindowsFormsApp1 {
                             }
                             output = " -map [left] -map 0:a -c:a aac -b:a 128k  " + surrounddownmix + " -b:v " + bitrate + "k -c:v " + codec + bframes + " -bsf:v \"h264_metadata=sample_aspect_ratio=1\" " + audiomix3d + " left.mkv -map [right] -an -b:v " + bitrate + "k -c:v " + codec + bframes + " -bsf:v \"h264_metadata=sample_aspect_ratio=1\" right.mkv";
                             debug_textbox.Text += "Uvíííííííííííííííííí:\n";
-                            puttogether = " && ffmpeg -i left.mkv -i right.mkv -map 0:a -map 0:v:0 -map 1:v:0 -c:v copy -c:a copy ";
+                            puttogether = " && ffmpeg -n -i left.mkv -i right.mkv " + subtitleinput + " -map 0:v:0 -map 0:a:0 -map 1:v:0 " + subtitlemaps2 + "-c:v copy -c:a copy ";
                         }
                     }
                     else {
@@ -541,6 +554,7 @@ namespace WindowsFormsApp1 {
                                 argumenty = " -vf \"scale=" + res_double + ":flags=lanczos,scale=" + res_normal + ":flags=neighbor\"  "; //-aspect 40:24
                             }
                             output = " -c:v " + codec + " -b:a 128k  " + surrounddownmix + "-c:a aac  -b:v " + bitrate + "k " + bframes;
+                            argumenty = subtitleinput + argumenty;
                         }
                         else if(ds_outputtype == 1) {
                             message_error("HoriHD is h264 only (for now)",0);
@@ -557,7 +571,7 @@ namespace WindowsFormsApp1 {
                                 argumenty = "-filter_complex \"split[l][r];[l]stereo3d=sbsl:ml[left];[left]scale=" + res_double + ":flags=lanczos[left];[left]scale=" + res_normal + ":flags=neighbor[left];[r]stereo3d=sbsl:mr[right];[right]scale=" + res_double + ":flags=lanczos[right];[right]scale=" + res_normal + ":flags=neighbor[right]\" ";
                             }
                             output = " -map [left] -map 0:a -c:a aac -b:a 128k " + surrounddownmix + " -b:v " + bitrate + "k -c:v " + codec + bframes + " left.mkv -map [right] -an -b:v " + bitrate + "k -c:v " + codec + bframes + " right.mkv";
-                            puttogether = " && ffmpeg -n -i left.mkv -i right.mkv -map 0:v:0 -map 0:a:0 -map 1:v:0 -c:v copy -c:a copy ";
+                            puttogether = " && ffmpeg -n -i left.mkv -i right.mkv " + subtitleinput + " -map 0:v:0 -map 0:a:0 -map 1:v:0 " + subtitlemaps0 + "-c:v copy -c:a copy ";
                         }
                     }
                     ffmpeg.StartInfo.FileName = "cmd.exe";
