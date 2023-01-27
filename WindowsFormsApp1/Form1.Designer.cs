@@ -592,7 +592,7 @@
             this.debug_textbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.debug_textbox.Location = new System.Drawing.Point(0, 736);
             this.debug_textbox.Name = "debug_textbox";
-            this.debug_textbox.Size = new System.Drawing.Size(640, 256);
+            this.debug_textbox.Size = new System.Drawing.Size(957, 256);
             this.debug_textbox.TabIndex = 33;
             this.debug_textbox.Text = "";
             // 
@@ -798,7 +798,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1263, 903);
+            this.ClientSize = new System.Drawing.Size(966, 988);
             this.Controls.Add(this.subtitle_notfound_error);
             this.Controls.Add(this.cusresy);
             this.Controls.Add(this.cusresx);

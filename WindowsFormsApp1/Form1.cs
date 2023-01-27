@@ -22,7 +22,6 @@ using System.Threading;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace WindowsFormsApp1 {
-    
     public partial class Form1 : Form {
         private System.Threading.Timer _timer;
         RadioButton DS_VF;
@@ -48,7 +47,7 @@ namespace WindowsFormsApp1 {
         string cesta;
         string outputnazev;
         string subtitles;
-        
+
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern bool SetProcessDPIAware();
         public Form1() {
@@ -58,7 +57,7 @@ namespace WindowsFormsApp1 {
                 float dpiY = graphics.DpiY;
                 this.AutoScaleDimensions = new SizeF(dpiX / 96, dpiY / 96);
             };
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;*/ 
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;*/
             //SetProcessDPIAware();
             version.Text = verze;
             if(File.Exists(@"C:\Windows\Media\Windows Logon Sound.wav")) {
@@ -126,11 +125,11 @@ namespace WindowsFormsApp1 {
             chordsound.Play();
             MessageBox.Show(zprava, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-        
+
         private int message_prompt(string zprava) {
             exclamationsound.Play();
             DialogResult dialogResult = MessageBox.Show(zprava, "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            woomy:
+        woomy:
             if(dialogResult == DialogResult.Yes) {
                 return 1;
             }
@@ -181,7 +180,7 @@ namespace WindowsFormsApp1 {
                 else subtimingoffset = suboffset.Text;
                 //subtitles = " -itsoffset " + suboffset.Text + " -i \"" + subtitlepath + "\" -c:s copy -map 1:s -map 0:v -map 0:a";
                 //listBox3.Items.Add(subtitlepath);
-                subtitleinput = " -itsoffset " + subtimingoffset + " -i " + subtitlepath + " ";
+                subtitleinput = " -itsoffset " + subtimingoffset + " -i " + subtitlepath + ".srt ";
                 subtitlemapall = " -map 0:a:0 -map 0:v:0 ";
                 subtitlemaps0 = " -map 0:s:0 ";
                 subtitlemaps1 = " -map 1:s:0 ";
@@ -194,7 +193,7 @@ namespace WindowsFormsApp1 {
                 subtitlemaps0 = "";
                 subtitlemaps1 = "";
                 subtitlemaps2 = "";
-                if(subtitle_notfound_error.Checked) message_error("Subtitle file not found!",500);
+                if(subtitle_notfound_error.Checked) message_error("Subtitle file not found!", 500);
             }/*
             if(embeddedsubs.Checked == true) {
                 subtitles = " -map 0:s ";
@@ -232,14 +231,14 @@ namespace WindowsFormsApp1 {
                 duration = Convert.ToUInt16(clip.duration);
                 if(duration == 0) {
                     if(vstup == null) {
-                        message_error("Error: You didnt choose input video!",0);
+                        message_error("Error: You didnt choose input video!", 0);
                         goto skipaa;
                     }
                     await Task.Delay(100); //<-- kvůli tomuhle řádku to musí být async ta funkce....
                 }
                 else if(player.currentMedia.imageSourceHeight == 0) {
                     if(vstup == null) {
-                        message_error("Error: You didnt choose input video!",0);
+                        message_error("Error: You didnt choose input video!", 0);
                         goto skipaa;
                     }
                     await Task.Delay(100); //<-- kvůli tomuhle řádku to musí být async ta funkce....
@@ -249,7 +248,7 @@ namespace WindowsFormsApp1 {
             UInt16 vstup_vyska = Convert.ToUInt16(player.currentMedia.imageSourceHeight);
             UInt16 vstup_sirka = Convert.ToUInt16(player.currentMedia.imageSourceWidth);
             if(duration == 0) {
-                message_error("Error loading video: duration is detected as 0. Using default bitrate of 2000Kb/s. It might be caused by bad input filename\nYou can specify custom bitrate in the debug menu",0);
+                message_error("Error loading video: duration is detected as 0. Using default bitrate of 2000Kb/s. It might be caused by bad input filename\nYou can specify custom bitrate in the debug menu", 0);
                 bitrate = 2000;
                 player.controls.stop();
                 //goto skipaa;
@@ -274,30 +273,30 @@ namespace WindowsFormsApp1 {
                     string puttogether = "";
                     bool abort = false;
                     if(vstup == null) {
-                        message_error("Error: You didnt choose input video!",0);
+                        message_error("Error: You didnt choose input video!", 0);
                     }
                     if(DS_VF == null) {
-                        message_error("Error: You didnt choose output format!",0);
+                        message_error("Error: You didnt choose output format!", 0);
                         abort = true;
                     }
                     if(DS_3Dformat == null) {
                         if(DS_VF != null) {
                             if(DS_VF.Name == "ds_vf_3d") {
-                                message_error("Error: You didnt choose input 3D format!",0);
+                                message_error("Error: You didnt choose input 3D format!", 0);
                                 abort = true;
                             }
                         }
                     }
                     if(DS_OutputCodec == null) {
-                        message_error("Error: You didnt choose output codec!",0);
+                        message_error("Error: You didnt choose output codec!", 0);
                         abort = true;
                     }
                     if(filtr == null) {
-                        message_error("Error: You didnt choose which scaling filter!",0);
+                        message_error("Error: You didnt choose which scaling filter!", 0);
                         abort = true;
                     }
                     if(stretch == null && cusresx == null && cusresy == null) {
-                        message_error("Error: You didnt choose stretch!",0);
+                        message_error("Error: You didnt choose stretch!", 0);
                         abort = true;
                     }
                     if(abort) goto abortion;
@@ -344,7 +343,7 @@ namespace WindowsFormsApp1 {
                         default:
                             break;
                     }
-                    
+
                     string bframes = "";
                     if(codec == "libx264 ") {
                         if(nobframes.Checked && nodeblock.Checked) {
@@ -372,7 +371,7 @@ namespace WindowsFormsApp1 {
                             }
                             else {
                                 bitrate = (Convert.ToUInt16(max_bitrate - 100));
-                                message_error("bitrate is small, the output quality may be poor",0);
+                                message_error("bitrate is small, the output quality may be poor", 0);
                             }
                         }
                         else {
@@ -384,7 +383,7 @@ namespace WindowsFormsApp1 {
                             }
                             else {
                                 bitrate = (Convert.ToUInt16(max_bitrate - 100));
-                                message_error("bitrate is small, the output quality may be poor",0);
+                                message_error("bitrate is small, the output quality may be poor", 0);
                             }
                         }
                     }
@@ -398,7 +397,7 @@ namespace WindowsFormsApp1 {
                             }
                             else {
                                 bitrate = (Convert.ToUInt16(max_bitrate - 50));
-                                message_error("bitrate is small, the output quality may be poor",0);
+                                message_error("bitrate is small, the output quality may be poor", 0);
                             }
                         }
                         else {
@@ -410,18 +409,18 @@ namespace WindowsFormsApp1 {
                             }
                             else {
                                 bitrate = (Convert.ToUInt16(max_bitrate - 100));
-                                message_error("bitrate is small, the output quality may be poor",0);
+                                message_error("bitrate is small, the output quality may be poor", 0);
                             }
                         }
                     }
                     else {
-                        message_error("Unknown error occured when selecting bitrate!",0);
+                        message_error("Unknown error occured when selecting bitrate!", 0);
                         goto abortion;
                     }
                     if(textBox2.Text != null) try {
                             bitrate = Convert.ToUInt16(textBox2.Text);
                         }
-                        catch { };      
+                        catch { };
                     string res_normal = "";
                     string res_double = "";
                     string res_hd = "";
@@ -457,9 +456,9 @@ namespace WindowsFormsApp1 {
                                 cuswidth = Convert.ToUInt16(cusresx.Text);
                                 cusheight = Convert.ToUInt16(cusresy.Text);
                             }
-                            catch { message_error("custom resolution contains invalid character",0); }
+                            catch { message_error("custom resolution contains invalid character", 0); }
                         }
-                        else message_error("custom resolution width is set but height not",0);
+                        else message_error("custom resolution width is set but height not", 0);
                     }
                     else if(cusresy.Text != "") {
                         if(cusresx.Text != "") {
@@ -467,11 +466,11 @@ namespace WindowsFormsApp1 {
                                 cuswidth = Convert.ToUInt16(cusresx.Text);
                                 cusheight = Convert.ToUInt16(cusresy.Text);
                             }
-                            catch { message_error("custom resolution contains invalid character",0); }
+                            catch { message_error("custom resolution contains invalid character", 0); }
                         }
-                        else message_error("custom resolution height is set but width not",0);
+                        else message_error("custom resolution height is set but width not", 0);
                     }
-                    if(cuswidth.HasValue) { 
+                    if(cuswidth.HasValue) {
                         res_normal = cuswidth.ToString() + ":" + cusheight.ToString();
                         res_hd = cuswidth.ToString() + ":" + cusheight.ToString();
                         res_double = (2 * cuswidth).ToString() + ":" + (2 * cusheight).ToString();
@@ -492,90 +491,58 @@ namespace WindowsFormsApp1 {
                     string audiomix3d;
                     string audiomix;
                     if(dualaudiotracks.Checked) {
-                         audiomix3d = " -map 0:a ";
-                         audiomix = " -map 0:a -map 0:v ";
+                        audiomix3d = " -map 0:a ";
+                        audiomix = " -map 0:a -map 0:v ";
                     }
                     else {
-                         audiomix = "";
-                         audiomix3d = " -map 0:a:0 ";
+                        audiomix = "";
+                        audiomix3d = " -map 0:a:0 ";
                     }
-                    if(codec == "libx264 ") {
-                        if(ds_outputtype == 0) {
-                            if(filtr.Name == "scale_linear") {
-                                argumenty = " -vf \"scale=" + res_normal + ":flags =lanczos,setsar=1\" -bsf:v \"h264_metadata=sample_aspect_ratio=1\"";
-                            }
-                            else if(filtr.Name == "scale_nearest") {
-                                argumenty = " -vf \"scale=" + res_normal + ":flags=neighbor,setsar=1\" -bsf:v \"h264_metadata=sample_aspect_ratio=1\" ";
-                            }
-                            else {
-                                argumenty = " -vf \"scale=" + res_double + ":flags=lanczos,scale=" + res_normal + ":flags=neighbor,setsar=1\" -bsf:v \"h264_metadata=sample_aspect_ratio=1\" "; //-aspect 40:24
-                            }
-                            argumenty = subtitleinput + argumenty;
-                            output = " -c:v " + codec + " -b:a 128k" + surrounddownmix + " -c:a aac  -b:v " + bitrate + "k " + bframes + audiomix;
+                    
+                    if(ds_outputtype == 0) {
+                        if(filtr.Name == "scale_linear") {
+                            argumenty = " -vf \"scale=" + res_normal + ":flags=lanczos,setsar=1\" ";
                         }
-                        else if(ds_outputtype == 1) {
-                            if(filtr.Name == "scale_linear") {
-                                argumenty = " -vf \"scale=" + res_hd + ":flags=Lanczos,setsar=1/2\" -bsf:v \"h264_metadata=sample_aspect_ratio=1/2\" ";
-                            }
-                            else if(filtr.Name == "scale_nearest") {
-                                argumenty = " -vf \"scale=" + res_hd + ":flags=neighbor,setsar=1/2\" -bsf:v \"h264_metadata=sample_aspect_ratio=1/2\" ";
-                            }
-                            else {
-                                argumenty = " -vf \"scale=" + res_hd_double + ":flags=lanczos,scale=" + res_hd + ":flags=neighbor,setsar=1/2\" -bsf:v \"h264_metadata=sample_aspect_ratio=1/2\" ";
-                            }
-                            argumenty = subtitleinput + argumenty;
+                        else if(filtr.Name == "scale_nearest") {
+                            argumenty = " -vf \"scale=" + res_normal + ":flags=neighbor,setsar=1\" ";
+                        }
+                        else {
+                            argumenty = " -vf \"scale=" + res_double + ":flags=lanczos,scale=" + res_normal + ":flags=neighbor,setsar=1\" "; //-aspect 40:24
+                        }
+                        argumenty = subtitleinput + argumenty;
+                        output = " -c:v " + codec + " -b:a 128k" + surrounddownmix + " -c:a aac  -b:v " + bitrate + "k " + bframes + audiomix;
+                    }
+                    else if(ds_outputtype == 1) {
+                        if(filtr.Name == "scale_linear") {
+                            argumenty = " -vf \"scale=" + res_hd + ":flags=Lanczos,setsar=1/2\" ";
+                        }
+                        else if(filtr.Name == "scale_nearest") {
+                            argumenty = " -vf \"scale=" + res_hd + ":flags=neighbor,setsar=1/2\" ";
+                        }
+                        else {
+                            argumenty = " -vf \"scale=" + res_hd_double + ":flags=lanczos,scale=" + res_hd + ":flags=neighbor,setsar=1/2\" ";
+                        }
+                        argumenty = subtitleinput + argumenty;
 
-                            output = " -c:v " + codec + " -b:a 128k " + surrounddownmix + "-c:a aac -b:v " + bitrate + "k " + bframes + audiomix;
-                        }
-                        else if(ds_outputtype == 2) {
-                            if(filtr.Name == "scale_linear") {
-                                argumenty = "-filter_complex \"split[l][r];[l]stereo3d=sbsl:ml[left];[left]scale=" + res_normal + ":flags=lanczos[left];[r]stereo3d=sbsl:mr[right];[right]scale=" + res_normal + ":flags=lanczos,setsar=1[right]\" ";
-                            }
-                            else if(filtr.Name == "scale_nearest") {
-                                argumenty = "-filter_complex \"split[l][r];[l]stereo3d=sbsl:ml[left];[left]scale=" + res_normal + ":flags=neighbor[left];[r]stereo3d=sbsl:mr[right];[right]scale=" + res_normal + ":flags=neighbor,setsar=1[right]\" ";
-                            }
-                            else {
-                                argumenty = "-filter_complex \"split[l][r];[l]stereo3d=sbsl:ml[left];[left]scale=" + res_double + ":flags=lanczos[left];[left]scale=" + res_normal + ":flags=neighbor[left];[r]stereo3d=sbsl:mr[right];[right]scale=" + res_double + ":flags=linear,setsar=1[right];[right]scale=" + res_normal + ":flags=neighbor,setsar=1[right]\" ";
-                            }
-                            output = " -map [left] -map 0:a -c:a aac -b:a 128k  " + surrounddownmix + " -b:v " + bitrate + "k -c:v " + codec + bframes + " -bsf:v \"h264_metadata=sample_aspect_ratio=1\" " + audiomix3d + " left.mkv -map [right] -an -b:v " + bitrate + "k -c:v " + codec + bframes + " -bsf:v \"h264_metadata=sample_aspect_ratio=1\" right.mkv";
-                            debug_textbox.Text += "Uvíííííííííííííííííí:\n";
-                            puttogether = " && ffmpeg -n -i left.mkv -i right.mkv " + subtitleinput + " -map 0:v:0 -map 0:a:0 -map 1:v:0 " + subtitlemaps2 + "-c:v copy -c:a copy ";
-                        }
+                        output = " -c:v " + codec + " -b:a 128k " + surrounddownmix + "-c:a aac -b:v " + bitrate + "k " + bframes + audiomix;
                     }
-                    else {
-                        if(ds_outputtype == 0) {
-                            if(filtr.Name == "scale_linear") {
-                                argumenty = " -vf \"scale=" + res_normal + ":flags =lanczos\" ";
-                            }
-                            else if(filtr.Name == "scale_nearest") {
-                                argumenty = " -vf \"scale=" + res_normal + ":flags=neighbor\"  ";
-                            }
-                            else {
-                                argumenty = " -vf \"scale=" + res_double + ":flags=lanczos,scale=" + res_normal + ":flags=neighbor\"  "; //-aspect 40:24
-                            }
-                            output = " -c:v " + codec + " -b:a 128k  " + surrounddownmix + "-c:a aac  -b:v " + bitrate + "k " + bframes;
-                            argumenty = subtitleinput + argumenty;
+                    else if(ds_outputtype == 2) {
+                        if(filtr.Name == "scale_linear") {
+                            argumenty = "-filter_complex \"split[l][r];[l]stereo3d=sbsl:ml[left];[left]scale=" + res_normal + ":flags=lanczos[left];[r]stereo3d=sbsl:mr[right];[right]scale=" + res_normal + ":flags=lanczos,setsar=1[right]\" ";
                         }
-                        else if(ds_outputtype == 1) {
-                            message_error("HoriHD is h264 only (for now)",0);
-                            goto abortion;
+                        else if(filtr.Name == "scale_nearest") {
+                            argumenty = "-filter_complex \"split[l][r];[l]stereo3d=sbsl:ml[left];[left]scale=" + res_normal + ":flags=neighbor[left];[r]stereo3d=sbsl:mr[right];[right]scale=" + res_normal + ":flags=neighbor,setsar=1[right]\" ";
                         }
-                        else if(ds_outputtype == 2) {
-                            if(filtr.Name == "scale_linear") {
-                                argumenty = "-filter_complex \"split[l][r];[l]stereo3d=sbsl:ml[left];[left]scale=" + res_normal + ":flags=lanczos[left];[r]stereo3d=sbsl:mr[right];[right]scale=" + res_normal + ":flags=lanczos[right]\" ";
-                            }
-                            else if(filtr.Name == "scale_nearest") {
-                                argumenty = "-filter_complex \"split[l][r];[l]stereo3d=sbsl:ml[left];[left]scale=" + res_normal + ":flags=neighbor[left];[r]stereo3d=sbsl:mr[right];[right]scale=" + res_normal + ":flags=neighbor[right]\" ";
-                            }
-                            else {
-                                argumenty = "-filter_complex \"split[l][r];[l]stereo3d=sbsl:ml[left];[left]scale=" + res_double + ":flags=lanczos[left];[left]scale=" + res_normal + ":flags=neighbor[left];[r]stereo3d=sbsl:mr[right];[right]scale=" + res_double + ":flags=lanczos[right];[right]scale=" + res_normal + ":flags=neighbor[right]\" ";
-                            }
-                            output = " -map [left] -map 0:a -c:a aac -b:a 128k " + surrounddownmix + " -b:v " + bitrate + "k -c:v " + codec + bframes + " left.mkv -map [right] -an -b:v " + bitrate + "k -c:v " + codec + bframes + " right.mkv";
-                            puttogether = " && ffmpeg -n -i left.mkv -i right.mkv " + subtitleinput + " -map 0:v:0 -map 0:a:0 -map 1:v:0 " + subtitlemaps0 + "-c:v copy -c:a copy ";
+                        else {
+                            argumenty = "-filter_complex \"split[l][r];[l]stereo3d=sbsl:ml[left];[left]scale=" + res_double + ":flags=lanczos[left];[left]scale=" + res_normal + ":flags=neighbor[left];[r]stereo3d=sbsl:mr[right];[right]scale=" + res_double + ":flags=lanczos,setsar=1[right];[right]scale=" + res_normal + ":flags=neighbor,setsar=1[right]\" ";
                         }
+                        output = " -map [left] -map 0:a -c:a aac -b:a 128k  " + surrounddownmix + " -b:v " + bitrate + "k -c:v " + codec + bframes + audiomix3d + " left.mkv -map [right] -an -b:v " + bitrate + "k -c:v " + codec + bframes + " right.mkv";
+                        debug_textbox.Text += "Uvíííííííííííííííííí:\n";
+                        puttogether = " && ffmpeg -n -i left.mkv -i right.mkv " + subtitleinput + " -map 0:v:0 -map 0:a:0 -map 1:v:0 " + subtitlemaps2 + "-c:v copy -c:a copy ";
                     }
+                    
                     ffmpeg.StartInfo.FileName = "cmd.exe";
-                    ffmpeg.StartInfo.Arguments = "/k " + "ffmpeg -n -i \"" + vstup2 + "\" " + argumenty + output + puttogether + " \"" + cesta + "\\" + outputnazev + ".mkv\" " + "&& ping 1.1.1.1 -n 1 && exit 1" ;
+                    ffmpeg.StartInfo.Arguments = "/k " + "ffmpeg -y -i \"" + vstup2 + "\" " + argumenty + output + puttogether + " \"" + cesta + "\\" + outputnazev + ".mkv\" " + "&& ping 1.1.1.1 -n 1 && exit 1";
                     debug_textbox.Text += ffmpeg.StartInfo.Arguments;
                     ffmpeg.Start();
                     ffmpeg.WaitForExit();
@@ -591,19 +558,19 @@ namespace WindowsFormsApp1 {
                     string puttogether = "";
                     bool abort = false;
                     if(vstup == null) {
-                        message_error("Error: You didnt choose input video!",0);
+                        message_error("Error: You didnt choose input video!", 0);
                         abort = true;
                     }
                     if(Wii_TV == null) {
-                        message_error("Error: You didnt choose output video!",0);
+                        message_error("Error: You didnt choose output video!", 0);
                         abort = true;
                     }
                     if(Wii_framerate == null) {
-                        message_error("Error: You didnt choose framerate!",0);
+                        message_error("Error: You didnt choose framerate!", 0);
                         abort = true;
                     }
                     if(Wii_codec == null) {
-                        message_error("Error: You didnt choose codec!",0);
+                        message_error("Error: You didnt choose codec!", 0);
                         abort = true;
                     }
                     if(abort == true) goto skipaa;
@@ -651,7 +618,7 @@ namespace WindowsFormsApp1 {
                                 }
                             }
                             else {
-                                message_error("error occured at wii 480p aspect, no stretch",0);
+                                message_error("error occured at wii 480p aspect, no stretch", 0);
                                 goto exitttttt;
                             }
                         }
@@ -681,7 +648,7 @@ namespace WindowsFormsApp1 {
                                 }
                             }
                             else {
-                                message_error("error occured at wii 576i aspect, no stretch",0);
+                                message_error("error occured at wii 576i aspect, no stretch", 0);
                                 goto exitttttt;
                             }
                         }
@@ -713,7 +680,7 @@ namespace WindowsFormsApp1 {
                                 }
                             }
                             else {
-                                message_error("error occured at wii 480p aspect, 10% stretch",0);
+                                message_error("error occured at wii 480p aspect, 10% stretch", 0);
                                 goto exitttttt;
                             }
                         }
@@ -743,26 +710,26 @@ namespace WindowsFormsApp1 {
                                 }
                             }
                             else {
-                                message_error("error occured at wii 576i aspect, 10% stretch",0);
+                                message_error("error occured at wii 576i aspect, 10% stretch", 0);
                                 goto exitttttt;
                             }
                         }
                         else {
-                            message_error("error occured at wii tv out selection",0);
+                            message_error("error occured at wii tv out selection", 0);
                             goto exitttttt;
                         }
                     }
                     if(Wii_framerate.Name == "wii_6050") {
                         if(Wii_TV.Name == "w480p") framerate = 60;
                         else if(Wii_TV.Name == "w576p") framerate = 50;
-                        else message_error("error occured at wii tv out selection (resolution w480p)",0);
+                        else message_error("error occured at wii tv out selection (resolution w480p)", 0);
                     }
                     else if(Wii_framerate.Name == "wii_3025") {
                         if(Wii_TV.Name == "w480p") framerate = 30;
                         else if(Wii_TV.Name == "w576p") framerate = 25;
-                        else message_error("error occured at wii tv out selection (resolution w480p)",0);
+                        else message_error("error occured at wii tv out selection (resolution w480p)", 0);
                     }
-                    else message_error("error occured at wii framerate selection",0);
+                    else message_error("error occured at wii framerate selection", 0);
                     exitttttt:;
                     debug_textbox.Text = "res: " + res + "\n";
                     debug_textbox.Text += "resd: " + res_double + "\n";
@@ -779,7 +746,7 @@ namespace WindowsFormsApp1 {
                         case "scale_mix":
                             scale = " -vf scale=" + res_double + ":flags=lanczos,scale=" + res + ":flags=neighbor ";
                             break;
-                            
+
                     }
                     debug_textbox.Text += "scale: " + scale + "\n";
                     ffmpeg.StartInfo.FileName = "cmd.exe";
@@ -792,7 +759,7 @@ namespace WindowsFormsApp1 {
                     tadasound.Play();
                 }
             }
-            else message_error("Error: 3DS/Wii mode not selected!",0);
+            else message_error("Error: 3DS/Wii mode not selected!", 0);
             skipaa:;
             Enabled = true;
             //handle.Set();
@@ -821,7 +788,7 @@ namespace WindowsFormsApp1 {
         }
 
 
-        
+
 
         private void ds_vf_standard_CheckedChanged(object sender, EventArgs e) {
             ds3dshow();
@@ -841,7 +808,7 @@ namespace WindowsFormsApp1 {
         private void version_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             System.Diagnostics.Process.Start("https://gbatemp.net/threads/nintendo-video-convertor-video-convertor-for-3ds-and-wii.622972");
         }
-        
+
         private async void button2_Click(object sender, EventArgs e) {
             Enabled = false;
             //create new queue
@@ -856,12 +823,12 @@ namespace WindowsFormsApp1 {
                     if(!(Path.GetExtension(file) == ".mp4" || Path.GetExtension(file) == ".avi" || Path.GetExtension(file) == ".mkv" || Path.GetExtension(file) == ".webm")) continue;
                     //if file with same name exists, but it has "3ds_" prefix, then skip
                     if(File.Exists(cesta + "\\3ds_" + Path.GetFileNameWithoutExtension(file) + ".mkv")) continue;
-                    
+
                     listBox1.Items.Add(file);
                     queue.Enqueue(file);
                 }
             }
-            else message_error("Musis vybrat soubor pro konvertovani složky",0);
+            else message_error("Musis vybrat soubor pro konvertovani složky", 0);
             while(queue.Count != 0) {
                 vstup = queue.Dequeue();
                 outputnazev = "3ds_" + Path.GetFileNameWithoutExtension(vstup);
@@ -897,6 +864,5 @@ namespace WindowsFormsApp1 {
         public static void SetWatermark(this TextBox textBox, string watermarkText) {
             SendMessage(textBox.Handle, EM_SETCUEBANNER, 0, watermarkText);
         }
-
     }
 }
