@@ -41,7 +41,7 @@ namespace WindowsFormsApp1 {
         SoundPlayer commandsound = new SoundPlayer();
         Process ffmpeg = new Process();
         WindowsMediaPlayer player = new WindowsMediaPlayer();
-        string verze = "v2.0.2";
+        string verze = "beta v2 2.0.0";
         string vstup;
         string vstup2;
         string cesta;
@@ -180,7 +180,7 @@ namespace WindowsFormsApp1 {
                 else subtimingoffset = suboffset.Text;
                 //subtitles = " -itsoffset " + suboffset.Text + " -i \"" + subtitlepath + "\" -c:s copy -map 1:s -map 0:v -map 0:a";
                 //listBox3.Items.Add(subtitlepath);
-                subtitleinput = " -itsoffset " + subtimingoffset + " -i \"" + subtitlepath + ".srt \"";
+                subtitleinput = " -itsoffset " + subtimingoffset + " -i " + subtitlepath + ".srt ";
                 subtitlemapall = " -map 0:a:0 -map 0:v:0 ";
                 subtitlemaps0 = " -map 0:s:0 ";
                 subtitlemaps1 = " -map 1:s:0 ";
