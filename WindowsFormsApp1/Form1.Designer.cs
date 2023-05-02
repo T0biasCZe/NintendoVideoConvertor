@@ -92,6 +92,8 @@
             this.cusresx = new System.Windows.Forms.TextBox();
             this.cusresy = new System.Windows.Forms.TextBox();
             this.subtitle_notfound_error = new System.Windows.Forms.CheckBox();
+            this.custom_sar = new System.Windows.Forms.TextBox();
+            this.wii_fps_notchange = new System.Windows.Forms.CheckBox();
             this.panel_ds_vf.SuspendLayout();
             this.panel_ds_or_wii.SuspendLayout();
             this.panel_ds_leftright.SuspendLayout();
@@ -794,11 +796,30 @@
             this.subtitle_notfound_error.Text = "show warning when \r\nsrt not found";
             this.subtitle_notfound_error.UseVisualStyleBackColor = true;
             // 
+            // custom_sar
+            // 
+            this.custom_sar.Location = new System.Drawing.Point(0, 616);
+            this.custom_sar.Name = "custom_sar";
+            this.custom_sar.Size = new System.Drawing.Size(160, 20);
+            this.custom_sar.TabIndex = 51;
+            // 
+            // wii_fps_notchange
+            // 
+            this.wii_fps_notchange.AutoSize = true;
+            this.wii_fps_notchange.Location = new System.Drawing.Point(176, 616);
+            this.wii_fps_notchange.Name = "wii_fps_notchange";
+            this.wii_fps_notchange.Size = new System.Drawing.Size(82, 17);
+            this.wii_fps_notchange.TabIndex = 52;
+            this.wii_fps_notchange.Text = "wii keep fps";
+            this.wii_fps_notchange.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(966, 988);
+            this.ClientSize = new System.Drawing.Size(338, 572);
+            this.Controls.Add(this.wii_fps_notchange);
+            this.Controls.Add(this.custom_sar);
             this.Controls.Add(this.subtitle_notfound_error);
             this.Controls.Add(this.cusresy);
             this.Controls.Add(this.cusresx);
@@ -936,6 +957,8 @@
         private System.Windows.Forms.TextBox cusresx;
         private System.Windows.Forms.TextBox cusresy;
         private System.Windows.Forms.CheckBox subtitle_notfound_error;
+        private System.Windows.Forms.TextBox custom_sar;
+        private System.Windows.Forms.CheckBox wii_fps_notchange;
     }
 }
 

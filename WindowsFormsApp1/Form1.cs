@@ -41,7 +41,7 @@ namespace WindowsFormsApp1 {
         SoundPlayer commandsound = new SoundPlayer();
         Process ffmpeg = new Process();
         WindowsMediaPlayer player = new WindowsMediaPlayer();
-        string verze = "v2.0.2";
+        string verze = "dev v2.1.0";
         string vstup;
         string vstup2;
         string cesta;
@@ -63,24 +63,39 @@ namespace WindowsFormsApp1 {
             if(File.Exists(@"C:\Windows\Media\Windows Logon Sound.wav")) {
                 logonsound.SoundLocation = @"C:\Windows\Media\Windows Logon Sound.wav";
             }
+            else {
+                logonsound.SoundLocation = ".\\dummy.wav";
+            }
             if(File.Exists(@"C:\Windows\Media\Windows Menu Command.wav")) {
                 commandsound.SoundLocation = @"C:\Windows\Media\Windows Menu Command.wav";
+            }
+            else {
+                logonsound.SoundLocation = ".\\dummy.wav";
             }
             if(File.Exists(@"C:\Windows\Media\chord.wav")) {
                 chordsound.SoundLocation = @"C:\Windows\Media\chord.wav";
             }
+            else {
+                logonsound.SoundLocation = ".\\dummy.wav";
+            }
             if(File.Exists(@"C:\Windows\Media\Windows Exclamation.wav")) {
                 exclamationsound.SoundLocation = @"C:\Windows\Media\Windows Exclamation.wav";
+            }
+            else {
+                logonsound.SoundLocation = ".\\dummy.wav";
             }
             if(File.Exists(@"C:\Windows\Media\tada.wav")) {
                 tadasound.SoundLocation = @"C:\Windows\Media\tada.wav";
             }
-            SoundPlayer testsound = new SoundPlayer();
+            else {
+                logonsound.SoundLocation = ".\\dummy.wav";
+            }
             logonsound.Play();
             textBox2.SetWatermark("custom bitrate (in Kb/s)");
             suboffset.SetWatermark("subtitles offset in seconds");
             cusresx.SetWatermark("Custom resolution width");
             cusresy.SetWatermark("Custom resolution height");
+            custom_sar.SetWatermark("Custom SAR (wii only)");
         }
         public static void ScaleResolution(int sourceWidth, int sourceHeight, int targetWidth, int targetHeight, out int scaledWidth, out int scaledHeight, float percent, out int actualpercent) {
             //get source aspect
@@ -166,7 +181,16 @@ namespace WindowsFormsApp1 {
                 message_error("Error: You didnt choose input video!", 0);
                 goto skipaa;
             }
-
+            string custom_sar_str = "";
+            if(custom_sar != null && custom_sar.Text != "") {
+                double customsarnum;
+                if(double.TryParse(custom_sar.Text, out customsarnum)) {
+                    custom_sar_str = ",setsar=" + custom_sar.Text;
+                }
+                else {
+                    message_error("Error: Custom SAR is not a number!", 0);
+                }
+            }
             string subtitlepath = cesta + "\\" + Path.GetFileNameWithoutExtension(vstup);
             string subtitleinput = "";
             string subtitlemapall = "";
@@ -181,10 +205,10 @@ namespace WindowsFormsApp1 {
                 //subtitles = " -itsoffset " + suboffset.Text + " -i \"" + subtitlepath + "\" -c:s copy -map 1:s -map 0:v -map 0:a";
                 //listBox3.Items.Add(subtitlepath);
                 subtitleinput = " -itsoffset " + subtimingoffset + " -i \"" + subtitlepath + ".srt \"";
-                subtitlemapall = " -map 0:a:0 -map 0:v:0 ";
-                subtitlemaps0 = " -map 0:s:0 ";
-                subtitlemaps1 = " -map 1:s:0 ";
-                subtitlemaps2 = " -map 2:s:0 ";
+                subtitlemapall = " -map 0:a:0? -map 0:v:0? ";
+                subtitlemaps0 = " -map 0:s:0? ";
+                subtitlemaps1 = " -map 1:s:0? ";
+                subtitlemaps2 = " -map 2:s:0? ";
             }
             else {
                 subtitleinput = "";
@@ -194,15 +218,11 @@ namespace WindowsFormsApp1 {
                 subtitlemaps1 = "";
                 subtitlemaps2 = "";
                 if(subtitle_notfound_error.Checked) message_error("Subtitle file not found!", 500);
-            }/*
+            }
             if(embeddedsubs.Checked == true) {
-                subtitles = " -map 0:s ";
-            }*//*
-            if(fromfolder == 0) { 
-                if(embeddedsubs.Checked == true) {
-                    subtitles = " -map 0:s ";
-                }
-            */
+                subtitlemapall = " -map 0:a:0? -map 0:v:0? ";
+                subtitlemaps0 = " -map 0:s:0? ";
+            }
             Enabled = false;
             if(true) {
                 DS_Wii = this.panel_ds_or_wii.Controls.OfType<RadioButton>().Where(x => x.Checked).FirstOrDefault();
@@ -573,6 +593,10 @@ namespace WindowsFormsApp1 {
                         message_error("Error: You didnt choose codec!", 0);
                         abort = true;
                     }
+                    if(filtr == null) {
+                        message_error("Error: You didnt choose scale filter!", 0);
+                        abort = true;
+                    }
                     if(abort == true) goto skipaa;
 
                     switch(Wii_codec.Name) {
@@ -580,7 +604,7 @@ namespace WindowsFormsApp1 {
                             codec = "h263p";
                             break;
                         case "wii_xvid":
-                            codec = "xvid";
+                            codec = "libxvid";
                             break;
                         case "wii_mjpeg":
                             codec = "mjpeg";
@@ -601,8 +625,9 @@ namespace WindowsFormsApp1 {
                                 }
                                 else {
                                     sirka = (UInt16)((vstup_sirka * 480) / vstup_vyska);
-                                    res = sirka + ":480";
                                     res_double = sirka * 2 + ":480";
+                                    if(sirka % 2 == 1) sirka++;
+                                    res = sirka + ":480";
                                 }
                             }
                             else if(Wii_Aspect.Name == "wii_169") {
@@ -613,8 +638,9 @@ namespace WindowsFormsApp1 {
                                 }
                                 else {
                                     sirka = (UInt16)((vstup_sirka * 480) / vstup_vyska);
-                                    res = sirka + ":480";
                                     res_double = sirka * 2 + ":480";
+                                    if(sirka % 2 == 1) sirka++;
+                                    res = sirka + ":480";
                                 }
                             }
                             else {
@@ -631,8 +657,9 @@ namespace WindowsFormsApp1 {
                                 }
                                 else {
                                     sirka = (UInt16)((vstup_sirka * 576) / vstup_vyska);
-                                    res = sirka + ":576";
                                     res_double = sirka * 2 + ":576";
+                                    if(sirka % 2 == 1) sirka++;
+                                    res = sirka + ":576";
                                 }
                             }
                             else if(Wii_Aspect.Name == "wii_169") {
@@ -643,8 +670,9 @@ namespace WindowsFormsApp1 {
                                 }
                                 else {
                                     sirka = (UInt16)((vstup_sirka * 576) / vstup_vyska);
-                                    res = sirka + ":576";
                                     res_double = sirka * 2 + ":576";
+                                    if(sirka % 2 == 1) sirka++;
+                                    res = sirka + ":576";
                                 }
                             }
                             else {
@@ -662,9 +690,10 @@ namespace WindowsFormsApp1 {
                                     res_double = "1280:-1";
                                 }
                                 else {
-                                    sirka = (UInt16)((vstup_sirka * 480) / vstup_vyska);
-                                    res = sirka + ":480";
+                                    sirka = (UInt16)((vstup_sirka * 480) / vstup_vyska / 1.1);
                                     res_double = sirka * 2 + ":960";
+                                    if(sirka % 2 == 1) sirka++;
+                                    res = sirka + ":480";
                                 }
                             }
                             else if(Wii_Aspect.Name == "wii_169") {
@@ -675,8 +704,9 @@ namespace WindowsFormsApp1 {
                                 }
                                 else {
                                     sirka = (UInt16)((vstup_sirka * 480) / vstup_vyska);
-                                    res = sirka + ":480";
                                     res_double = sirka * 2 + ":960";
+                                    if(sirka % 2 == 1) sirka++;
+                                    res = sirka + ":480";
                                 }
                             }
                             else {
@@ -693,8 +723,9 @@ namespace WindowsFormsApp1 {
                                 }
                                 else {
                                     sirka = (UInt16)((vstup_sirka * 576) / vstup_vyska);
-                                    res = sirka + ":576";
                                     res_double = sirka * 2 + ":1152";
+                                    if(sirka % 2 == 1) sirka++;
+                                    res = sirka + ":576";
                                 }
                             }
                             else if(Wii_Aspect.Name == "wii_169") {
@@ -705,8 +736,9 @@ namespace WindowsFormsApp1 {
                                 }
                                 else {
                                     sirka = (UInt16)((vstup_sirka * 576) / vstup_vyska);
-                                    res = sirka + ":576";
                                     res_double = sirka * 2 + ":1152";
+                                    if(sirka % 2 == 1) sirka++;
+                                    res = sirka + ":576";
                                 }
                             }
                             else {
@@ -719,6 +751,34 @@ namespace WindowsFormsApp1 {
                             goto exitttttt;
                         }
                     }
+                    UInt16? cuswidth = null;
+                    UInt16? cusheight = null;
+                    if(cusresx.Text != "") {
+                        if(cusresy.Text != "") {
+                            try {
+                                cuswidth = Convert.ToUInt16(cusresx.Text);
+                                cusheight = Convert.ToUInt16(cusresy.Text);
+                            }
+                            catch { message_error("custom resolution contains invalid character", 0); }
+                        }
+                        else message_error("custom resolution width is set but height not", 0);
+                    }
+                    else if(cusresy.Text != "") {
+                        if(cusresx.Text != "") {
+                            try {
+                                cuswidth = Convert.ToUInt16(cusresx.Text);
+                                cusheight = Convert.ToUInt16(cusresy.Text);
+                            }
+                            catch { message_error("custom resolution contains invalid character", 0); }
+                        }
+                        else message_error("custom resolution height is set but width not", 0);
+                    }
+                    if(cuswidth.HasValue) {
+                        res = cuswidth.ToString() + ":" + cusheight.ToString();
+                        res_double = (2 * cuswidth).ToString() + ":" + (2 * cusheight).ToString();
+                    }
+
+
                     if(Wii_framerate.Name == "wii_6050") {
                         if(Wii_TV.Name == "w480p") framerate = 60;
                         else if(Wii_TV.Name == "w576p") framerate = 50;
@@ -731,6 +791,10 @@ namespace WindowsFormsApp1 {
                     }
                     else message_error("error occured at wii framerate selection", 0);
                     exitttttt:;
+                    string bitrate_wii;
+                    if(textBox2.Text != "") bitrate_wii = textBox2.Text + "k ";
+                    else bitrate_wii = "1600k ";
+
                     debug_textbox.Text = "res: " + res + "\n";
                     debug_textbox.Text += "resd: " + res_double + "\n";
                     debug_textbox.Text += "framerate: " + framerate + "\n";
@@ -738,19 +802,21 @@ namespace WindowsFormsApp1 {
                     string scale = " ";
                     switch(filtr.Name) {
                         case "scale_linear":
-                            scale = " -vf scale=" + res + ":flags=lanczos ";
+                            scale = " -vf scale=" + res + ":flags=lanczos" + custom_sar_str + " ";
                             break;
                         case "scale_nearest":
-                            scale = " -vf scale=" + res + ":flags=neighbor ";
+                            scale = " -vf scale=" + res + ":flags=neighbor" + custom_sar_str + " ";
                             break;
                         case "scale_mix":
-                            scale = " -vf scale=" + res_double + ":flags=lanczos,scale=" + res + ":flags=neighbor ";
+                            scale = " -vf scale=" + res_double + ":flags=lanczos,scale=" + res + ":flags=neighbor" + custom_sar_str + " ";
                             break;
 
                     }
+                    string framerate_set = "";
+                    if(wii_fps_notchange.Checked == false) framerate_set = " -r " + framerate.ToString() + " ";
                     debug_textbox.Text += "scale: " + scale + "\n";
                     ffmpeg.StartInfo.FileName = "cmd.exe";
-                    ffmpeg.StartInfo.Arguments = "/k " + "ffmpeg -y -i \"" + vstup + "\" -r " + framerate.ToString() + " " + scale + argumenty + output + " \"" + cesta + "\\" + outputnazev + ".mkv\" " + "&& ping 1.1.1.1 -n 1 && exit 1";
+                    ffmpeg.StartInfo.Arguments = "/k " + "ffmpeg -y -i \"" + vstup + "\"" + subtitleinput + subtitlemapall + subtitlemaps0 + framerate_set + scale + argumenty + " -c:v " + codec + " -b:v " + bitrate_wii + output + " \"" + cesta + "\\" + outputnazev + ".mkv\" " + "&& ping 1.1.1.1 -n 1 && exit 1";
                     debug_textbox.Text += ffmpeg.StartInfo.Arguments;
                     //ffmpeg.StartInfo.Arguments = "/k" + "echo " + vf + threed + codec;
                     //-hide_banner -v warning -stats
