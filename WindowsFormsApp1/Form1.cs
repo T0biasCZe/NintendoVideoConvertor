@@ -41,7 +41,7 @@ namespace WindowsFormsApp1 {
         SoundPlayer commandsound = new SoundPlayer();
         Process ffmpeg = new Process();
         WindowsMediaPlayer player = new WindowsMediaPlayer();
-        string verze = "dev v2.1.0";
+        string verze = "dev v2.2.0";
         string vstup;
         string vstup2;
         string cesta;
@@ -377,7 +377,7 @@ namespace WindowsFormsApp1 {
                         }
                     }
                     if(codec == "libx264 " && DS_VF.Name == "ds_vf_3d") {
-                        if(message_prompt2("Video Player 1.5.1 and 1.5.2 has bug with h264 3D video and plays it too fast. \n Use Video Player 1.5.0 or use mpeg2video codec instead.") == 0) {
+                        if(message_prompt2("Video Player 1.5.1 and 1.5.2 has bug with h264 3D video and plays it too fast. \n Use Video Player 1.5.0 or use mpeg2video codec instead.\n This may be fixed in current versions") == 0) {
                             goto skipaa;
                         }
                     }
@@ -548,13 +548,13 @@ namespace WindowsFormsApp1 {
                     }
                     else if(ds_outputtype == 2) {
                         if(filtr.Name == "scale_linear") {
-                            argumenty = "-filter_complex \"split[l][r];[l]stereo3d=sbsl:ml[left];[left]scale=" + res_normal + ":flags=lanczos[left];[r]stereo3d=sbsl:mr[right];[right]scale=" + res_normal + ":flags=lanczos,setsar=1[right]\" ";
+                            argumenty = "-filter_complex \"split[l][r];[l]stereo3d=sbsl:ml[left];[left]scale=" + res_normal + ":flags=lanczos,setsar=1[left];[r]stereo3d=sbsl:mr[right];[right]scale=" + res_normal + ":flags=lanczos,setsar=1[right]\" ";
                         }
                         else if(filtr.Name == "scale_nearest") {
-                            argumenty = "-filter_complex \"split[l][r];[l]stereo3d=sbsl:ml[left];[left]scale=" + res_normal + ":flags=neighbor[left];[r]stereo3d=sbsl:mr[right];[right]scale=" + res_normal + ":flags=neighbor,setsar=1[right]\" ";
+                            argumenty = "-filter_complex \"split[l][r];[l]stereo3d=sbsl:ml[left];[left]scale=" + res_normal + ":flags=neighbor,setsar=1[left];[r]stereo3d=sbsl:mr[right];[right]scale=" + res_normal + ":flags=neighbor,setsar=1[right]\" ";
                         }
                         else {
-                            argumenty = "-filter_complex \"split[l][r];[l]stereo3d=sbsl:ml[left];[left]scale=" + res_double + ":flags=lanczos[left];[left]scale=" + res_normal + ":flags=neighbor[left];[r]stereo3d=sbsl:mr[right];[right]scale=" + res_double + ":flags=lanczos,setsar=1[right];[right]scale=" + res_normal + ":flags=neighbor,setsar=1[right]\" ";
+                            argumenty = "-filter_complex \"split[l][r];[l]stereo3d=sbsl:ml[left];[left]scale=" + res_double + ":flags=lanczos,setsar=1[left];[left]scale=" + res_normal + ":flags=neighbor,setsar=1[left];[r]stereo3d=sbsl:mr[right];[right]scale=" + res_double + ":flags=lanczos,setsar=1[right];[right]scale=" + res_normal + ":flags=neighbor,setsar=1[right]\" ";
                         }
                         output = " -map [left] -map 0:a -c:a aac -b:a 128k  " + surrounddownmix + " -b:v " + bitrate + "k -c:v " + codec + bframes + audiomix3d + " left.mkv -map [right] -an -b:v " + bitrate + "k -c:v " + codec + bframes + " right.mkv";
                         debug_textbox.Text += "Uvíííííííííííííííííí:\n";
