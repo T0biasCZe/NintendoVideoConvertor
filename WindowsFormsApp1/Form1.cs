@@ -325,7 +325,7 @@ namespace WindowsFormsApp1 {
                             ds_outputtype = 0;
                             vstup2 = vstup;
                             break;
-                        case "ds_vf_horihd":
+                        case "ds_vf_horizonhd":
                             vstup2 = vstup;
                             ds_outputtype = 1;
                             break;
@@ -381,7 +381,7 @@ namespace WindowsFormsApp1 {
                             goto skipaa;
                         }
                     }
-                    if(DS_VF.Name == "ds_vf_3d" || DS_VF.Name == "ds_vf_horihd") {
+                    if(DS_VF.Name == "ds_vf_3d" || DS_VF.Name == "ds_vf_horizonhd") {
                         if(codec == "libx264 ") {
                             if(max_bitrate > 2000) {
                                 bitrate = 2000;
@@ -864,7 +864,7 @@ namespace WindowsFormsApp1 {
             ds3dshow();
         }
 
-        private void ds_vf_horihd_CheckedChanged(object sender, EventArgs e) {
+        private void ds_vf_horizonhd_CheckedChanged(object sender, EventArgs e) {
             ds3dshow();
         }
         private void test(object sender, EventArgs e) {
