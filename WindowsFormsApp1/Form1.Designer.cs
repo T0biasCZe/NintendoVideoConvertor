@@ -28,7 +28,7 @@
             this.Wii3DS_radio_3DS = new System.Windows.Forms.RadioButton();
             this.Wii3DS_radio_Wii = new System.Windows.Forms.RadioButton();
             this.ds_vf_standard = new System.Windows.Forms.RadioButton();
-            this.ds_vf_horihd = new System.Windows.Forms.RadioButton();
+            this.ds_vf_horizonhd = new System.Windows.Forms.RadioButton();
             this.ds_vf_3d = new System.Windows.Forms.RadioButton();
             this.ds_3dformat_leftright = new System.Windows.Forms.RadioButton();
             this.ds_3dformat_updown = new System.Windows.Forms.RadioButton();
@@ -141,17 +141,17 @@
             this.ds_vf_standard.UseVisualStyleBackColor = true;
             this.ds_vf_standard.CheckedChanged += new System.EventHandler(this.test);
             // 
-            // ds_vf_horihd
+            // ds_vf_horizonhd
             // 
-            this.ds_vf_horihd.AutoSize = true;
-            this.ds_vf_horihd.Location = new System.Drawing.Point(0, 32);
-            this.ds_vf_horihd.Name = "ds_vf_horihd";
-            this.ds_vf_horihd.Size = new System.Drawing.Size(87, 17);
-            this.ds_vf_horihd.TabIndex = 3;
-            this.ds_vf_horihd.TabStop = true;
-            this.ds_vf_horihd.Text = "HoriHD 240p";
-            this.ds_vf_horihd.UseVisualStyleBackColor = true;
-            this.ds_vf_horihd.CheckedChanged += new System.EventHandler(this.ds_vf_horihd_CheckedChanged);
+            this.ds_vf_horizonhd.AutoSize = true;
+            this.ds_vf_horizonhd.Location = new System.Drawing.Point(0, 32);
+            this.ds_vf_horizonhd.Name = "ds_vf_horizonhd";
+            this.ds_vf_horizonhd.Size = new System.Drawing.Size(87, 17);
+            this.ds_vf_horizonhd.TabIndex = 3;
+            this.ds_vf_horizonhd.TabStop = true;
+            this.ds_vf_horizonhd.Text = "HorizonHD 240p";
+            this.ds_vf_horizonhd.UseVisualStyleBackColor = true;
+            this.ds_vf_horizonhd.CheckedChanged += new System.EventHandler(this.ds_vf_horizonhd_CheckedChanged);
             // 
             // ds_vf_3d
             // 
@@ -282,7 +282,7 @@
             // panel_ds_vf
             // 
             this.panel_ds_vf.Controls.Add(this.ds_vf_standard);
-            this.panel_ds_vf.Controls.Add(this.ds_vf_horihd);
+            this.panel_ds_vf.Controls.Add(this.ds_vf_horizonhd);
             this.panel_ds_vf.Controls.Add(this.ds_vf_3d);
             this.panel_ds_vf.Location = new System.Drawing.Point(32, 96);
             this.panel_ds_vf.Name = "panel_ds_vf";
@@ -893,7 +893,7 @@
         private System.Windows.Forms.RadioButton Wii3DS_radio_3DS;
         private System.Windows.Forms.RadioButton Wii3DS_radio_Wii;
         private System.Windows.Forms.RadioButton ds_vf_standard;
-        private System.Windows.Forms.RadioButton ds_vf_horihd;
+        private System.Windows.Forms.RadioButton ds_vf_horizonhd;
         private System.Windows.Forms.RadioButton ds_vf_3d;
         private System.Windows.Forms.RadioButton ds_3dformat_leftright;
         private System.Windows.Forms.RadioButton ds_3dformat_updown;
