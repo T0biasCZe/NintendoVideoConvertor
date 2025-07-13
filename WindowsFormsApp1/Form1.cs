@@ -41,7 +41,7 @@ namespace WindowsFormsApp1 {
         SoundPlayer commandsound = new SoundPlayer();
         Process ffmpeg = new Process();
         WindowsMediaPlayer player = new WindowsMediaPlayer();
-        string verze = "dev v2.2.0";
+        string verze = "v2.2.0";
         string vstup;
         string vstup2;
         string cesta;
@@ -52,51 +52,49 @@ namespace WindowsFormsApp1 {
         private static extern bool SetProcessDPIAware();
         public Form1() {
             InitializeComponent();
-            /*using(Graphics graphics = this.CreateGraphics()) {
-                float dpiX = graphics.DpiX;
-                float dpiY = graphics.DpiY;
-                this.AutoScaleDimensions = new SizeF(dpiX / 96, dpiY / 96);
-            };
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;*/
-            //SetProcessDPIAware();
-            version.Text = verze;
-            if(File.Exists(@"C:\Windows\Media\Windows Logon Sound.wav")) {
-                logonsound.SoundLocation = @"C:\Windows\Media\Windows Logon Sound.wav";
-            }
-            else {
-                logonsound.SoundLocation = ".\\dummy.wav";
-            }
-            if(File.Exists(@"C:\Windows\Media\Windows Menu Command.wav")) {
-                commandsound.SoundLocation = @"C:\Windows\Media\Windows Menu Command.wav";
-            }
-            else {
-                logonsound.SoundLocation = ".\\dummy.wav";
-            }
-            if(File.Exists(@"C:\Windows\Media\chord.wav")) {
-                chordsound.SoundLocation = @"C:\Windows\Media\chord.wav";
-            }
-            else {
-                logonsound.SoundLocation = ".\\dummy.wav";
-            }
-            if(File.Exists(@"C:\Windows\Media\Windows Exclamation.wav")) {
-                exclamationsound.SoundLocation = @"C:\Windows\Media\Windows Exclamation.wav";
-            }
-            else {
-                logonsound.SoundLocation = ".\\dummy.wav";
-            }
-            if(File.Exists(@"C:\Windows\Media\tada.wav")) {
-                tadasound.SoundLocation = @"C:\Windows\Media\tada.wav";
-            }
-            else {
-                logonsound.SoundLocation = ".\\dummy.wav";
-            }
-            logonsound.Play();
-            textBox2.SetWatermark("custom bitrate (in Kb/s)");
-            suboffset.SetWatermark("subtitles offset in seconds");
-            cusresx.SetWatermark("Custom resolution width");
-            cusresy.SetWatermark("Custom resolution height");
-            custom_sar.SetWatermark("Custom SAR (wii only)");
-        }
+            try{
+                version.Text = verze;
+                if(File.Exists(@"C:\Windows\Media\Windows Logon Sound.wav")) {
+                    logonsound.SoundLocation = @"C:\Windows\Media\Windows Logon Sound.wav";
+                }
+                else {
+                    logonsound.SoundLocation = ".\\dummy.wav";
+                }
+                if(File.Exists(@"C:\Windows\Media\Windows Menu Command.wav")) {
+                    commandsound.SoundLocation = @"C:\Windows\Media\Windows Menu Command.wav";
+                }
+                else {
+                    logonsound.SoundLocation = ".\\dummy.wav";
+                }
+                if(File.Exists(@"C:\Windows\Media\chord.wav")) {
+                    chordsound.SoundLocation = @"C:\Windows\Media\chord.wav";
+                }
+                else {
+                    logonsound.SoundLocation = ".\\dummy.wav";
+                }
+                if(File.Exists(@"C:\Windows\Media\Windows Exclamation.wav")) {
+                    exclamationsound.SoundLocation = @"C:\Windows\Media\Windows Exclamation.wav";
+                }
+                else {
+                    logonsound.SoundLocation = ".\\dummy.wav";
+                }
+                if(File.Exists(@"C:\Windows\Media\tada.wav")) {
+                    tadasound.SoundLocation = @"C:\Windows\Media\tada.wav";
+                }
+                else {
+                    logonsound.SoundLocation = ".\\dummy.wav";
+                }
+                logonsound.Play();
+                textBox2.SetWatermark("custom bitrate (in Kb/s)");
+                suboffset.SetWatermark("subtitles offset in seconds");
+                cusresx.SetWatermark("Custom resolution width");
+                cusresy.SetWatermark("Custom resolution height");
+                custom_sar.SetWatermark("Custom SAR (wii only)");
+			} catch(Exception ex){
+                MessageBox.Show("Error initializing application:\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+
+		}
         public static void ScaleResolution(int sourceWidth, int sourceHeight, int targetWidth, int targetHeight, out int scaledWidth, out int scaledHeight, float percent, out int actualpercent) {
             //get source aspect
             double scaleX = (double)targetWidth / sourceWidth;
